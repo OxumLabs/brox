@@ -1,0 +1,1 @@
+clang -O3 -march=native -flto -static -o cbrox.joy cbrox.c
