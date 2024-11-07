@@ -1,4 +1,0 @@
-[DEBUG] Allocated 104857600 bytes of memory
-[DEBUG] Running command: code
-[DEBUG] Memory limit set to 104857600 bytes
-[DEBUG] Dropped privileges to user 'nobody'.

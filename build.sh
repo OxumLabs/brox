@@ -1,28 +1,23 @@
 #!/bin/bash
 
-# Function to check if a command exists
-command_exists() {
+cmd_exists() {
     command -v "$1" &> /dev/null
 }
 
-# Function to handle Linux build
-build_linux() {
+build_lnux() {
     echo "Do you want to build for Linux? (y/n)"
-    read choice
-    if [ "$choice" == "y" ]; then
+    read ch
+    if [ "$ch" == "y" ]; then
         echo "Building for Linux..."
 
-        if command_exists "zig"; then
-            echo "Using Zig for Linux build..."
-            zig cc -O3 -march=native -flto -static -o brox.linux brox.c
-        elif command_exists "clang"; then
+        if cmd_exists "clang"; then
             echo "Using Clang for Linux build..."
-            clang -O3 -march=native -flto -static -o brox.linux brox.c
-        elif command_exists "gcc"; then
-            echo "Using GCC for Linux build..."
-            gcc -O3 -march=native -flto -static -o brox.linux brox.c
+            clang -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer \
+                -fstrict-aliasing -fno-strict-overflow -fmerge-all-constants -ftree-vectorize \
+                -fno-exceptions -fno-rtti -fvisibility=hidden -fvisibility-inlines-hidden \
+                -static -o brox.linux brox.c
         else
-            echo "Error: No suitable compiler found for Linux build."
+            echo "Error: Clang not found for Linux build."
             exit 1
         fi
 
@@ -34,53 +29,45 @@ build_linux() {
     fi
 }
 
-# Function to handle Windows build using Zig, Clang, or GCC
-build_windows() {
+build_wndws() {
     echo "Do you want to build for Windows? (y/n)"
-    read choice
-    if [ "$choice" == "y" ]; then
+    read ch
+    if [ "$ch" == "y" ]; then
         echo "Building for Windows..."
 
-        if command_exists "zig"; then
-            echo "Using Zig for Windows build..."
-            zig cc -O3 -march=native -flto -static -target x86_64-windows -o brox.exe brox.c
-        elif command_exists "clang"; then
+        if cmd_exists "clang"; then
             echo "Using Clang for Windows build..."
-            clang -O3 -march=native -flto -static -target x86_64-windows -o brox.exe brox.c
-        elif command_exists "gcc"; then
-            echo "Using GCC for Windows build..."
-            gcc -O3 -march=native -flto -static -o brox.exe brox.c -L/usr/x86_64-w64-mingw32/lib -lmingw32 -lgcc -lm -lstdc++
+            clang -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer \
+                -fstrict-aliasing -fno-strict-overflow -fmerge-all-constants -ftree-vectorize \
+                -fno-exceptions -fno-rtti -fvisibility=hidden -fvisibility-inlines-hidden \
+                -static -target x86_64-windows -o brox.exe brox.c
         else
-            echo "Error: No suitable compiler found for Windows build."
+            echo "Error: Clang not found for Windows build."
             exit 1
         fi
 
         if [ $? -eq 0 ]; then
             echo "Windows build completed: brox.exe"
         else
-            echo "Windows build failed. Ensure you have the proper cross-compilation tools installed (e.g., MinGW or GCC for Windows)."
+            echo "Windows build failed. Ensure you have the proper cross-compilation tools installed (e.g., Clang with Windows target)."
         fi
     fi
 }
 
-# Function to handle macOS build using Zig, Clang, or GCC
-build_macos() {
+build_mcs() {
     echo "Do you want to build for macOS? (y/n)"
-    read choice
-    if [ "$choice" == "y" ]; then
+    read ch
+    if [ "$ch" == "y" ]; then
         echo "Building for macOS..."
 
-        if command_exists "zig"; then
-            echo "Using Zig for macOS build..."
-            zig cc -O3 -march=native -flto -static -target x86_64-apple-macos12 -o brox.macos brox.c
-        elif command_exists "clang"; then
+        if cmd_exists "clang"; then
             echo "Using Clang for macOS build..."
-            clang -O3 -march=native -flto -static -target x86_64-apple-macos12 -o brox.macos brox.c
-        elif command_exists "gcc"; then
-            echo "Using GCC for macOS build..."
-            gcc -O3 -march=native -flto -static -target x86_64-apple-macos12 -o brox.macos brox.c
+            clang -O3 -march=native -flto -ffast-math -funroll-loops -fomit-frame-pointer \
+                -fstrict-aliasing -fno-strict-overflow -fmerge-all-constants -ftree-vectorize \
+                -fno-exceptions -fno-rtti -fvisibility=hidden -fvisibility-inlines-hidden \
+                -static -target x86_64-apple-macos12 -o brox.macos brox.c
         else
-            echo "Error: No suitable compiler found for macOS build."
+            echo "Error: Clang not found for macOS build."
             exit 1
         fi
 
@@ -92,7 +79,6 @@ build_macos() {
     fi
 }
 
-# Ask for each platform build step by step
-build_linux
-build_windows
-build_macos
+build_lnux
+build_wndws
+build_mcs
