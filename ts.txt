@@ -1,0 +1,5 @@
+[DEBUG] Allocated 1048576 bytes of memory
+[DEBUG] Running command: clang
+[DEBUG] Memory limit set to 1048576 bytes
+[DEBUG] Command execution failed with exit code 256
+[DEBUG] Program execution within cgroup failed.
