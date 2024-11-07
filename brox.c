@@ -15,16 +15,16 @@ typedef struct {
 } MemBlk;
 
 void h() {
-    printf("cbrox - Memory blocks and program runner with cgroup limits\n");
-    printf("Usage: cbrox <cmd> <prog_name> <size_mb> <debug y/n>\n\n");
+    printf("brox - Memory blocks and program runner with cgroup limits\n");
+    printf("Usage: brox <cmd> <prog_name> <size_mb> <debug y/n>\n\n");
     printf("Commands:\n");
     printf("  run <prog_name> <size_mb> <debug y/n>  Run a program in cgroup with memory limit.\n");
     printf("  stress <size_mb> <debug y/n>           Stress test by allocating memory.\n");
     printf("  help                                  Show this help message.\n");
     printf("\nExample usage:\n");
-    printf("  cbrox run 'stress --vm 1 --vm-bytes 512M --timeout 10s' 100 y\n");
-    printf("  cbrox stress 500 y\n");
-    printf("  cbrox help\n");
+    printf("  brox run 'stress --vm 1 --vm-bytes 512M --timeout 10s' 100 y\n");
+    printf("  brox stress 500 y\n");
+    printf("  brox help\n");
 }
 
 MemBlk *mb_create(size_t sz) {
